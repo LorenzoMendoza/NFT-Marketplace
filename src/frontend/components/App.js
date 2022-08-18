@@ -1,8 +1,39 @@
 
 import logo from './logo.png';
 import './App.css';
+
+import { useState } from 'react';
+import { ethers } from "ethers";
+import MarketplaceAbi from '../contractsData/Marketplace.json'
+import MarketplaceAbi from '../contractsData/Marketplace-address.json'
+import MarketplaceAbi from '../contractsData/NFT.json'
+import MarketplaceAbi from '../contractsData/NFT-address.json'
  
 function App() {
+  const [loading, setLoading] = useState(true)
+  const [account, setAccount] = useState(null);
+  const [nft, setNFT] = useState({})
+  const [marketplace, setMarketplace] = useState({})
+  //MetaMask connect and login
+  const web3Handler = async () => {
+    const accounts = await window.etherum.request({method: 'eth_requestAccounts'});
+    setAccount(accounts[0])
+    //this gets provider from metamask
+    const provider = new ethers.providers.Web3Provider(window.etherum)
+    const signer = provider.getSigner()
+
+    loadContracts(signer)
+  }
+
+  const loadContracts = async () => {
+    //Get deployed copies of the contracts
+    const marketplace = new ethers.Contract(MarketplaceAddress.address, MarketplaceAbi.abi, signer)
+    setMarketplace(marketplace)
+    const nft = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer)
+    setNFT(nft)
+    setLoading(false)
+  }
+
   return (
     <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
