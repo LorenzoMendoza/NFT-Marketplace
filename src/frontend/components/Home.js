@@ -56,7 +56,7 @@ const Home = ({marketplace, nft}) => {
                         {items.map((item, idx) => (
                             <Col key={idx} className="overflow-hidden">
                                 <Card>
-                                    <Card.Img varian="top" src={item.image} />
+                                    <Card.Img variant="top" src={item.image} />
                                     <Card.Body color="secondary">
                                         <Card.Title></Card.Title>
                                         <Card.Text>
